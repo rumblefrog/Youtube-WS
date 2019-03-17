@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"net/url"
 	"strconv"
 	"strings"
 
@@ -72,5 +73,17 @@ func Search(c *gin.Context) {
 		c.JSON(200, result)
 	})
 
-	searchCollector.Visit("https://www.youtube.com/results?search_query=" + q.Keyword)
+	yl, _ := url.Parse("https://www.youtube.com/results")
+
+	subQ := yl.Query()
+
+	subQ.Add("search_query", q.Keyword)
+
+	if q.SP != "" {
+		subQ.Add("sp", q.SP)
+	}
+
+	yl.RawQuery = subQ.Encode()
+
+	searchCollector.Visit(yl.String())
 }
