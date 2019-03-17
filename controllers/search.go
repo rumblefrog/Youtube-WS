@@ -34,6 +34,11 @@ func Search(c *gin.Context) {
 
 		video.VCode = strings.Split(e.ChildAttr("div.yt-lockup-thumbnail a.yt-uix-sessionlink", "href"), "?v=")[1]
 		video.Thumbnail = e.ChildAttr("div.yt-lockup-thumbnail span.yt-thumb-simple img", "src")
+
+		if video.Thumbnail[0:4] == "/yts" {
+			video.Thumbnail = e.ChildAttr("div.yt-lockup-thumbnail span.yt-thumb-simple img", "data-thumb")
+		}
+
 		video.Title = e.ChildAttr("h3.yt-lockup-title > a.yt-uix-tile-link", "title")
 		video.Creator = e.ChildText("div.yt-lockup-byline > a")
 		video.TimeLapsed = e.ChildText("div.yt-lockup-meta li:first-child")
@@ -49,8 +54,7 @@ func Search(c *gin.Context) {
 		cp := &models.Pager{}
 
 		cp.Meta = utils.ParsePager(e.ChildAttr("button.yt-uix-button", "data-redirect-url"), true)
-		// log.Println(e.ChildAttr("button.yt-uix-button", "data-redirect-url"))
-		cp.Page, _ = strconv.ParseInt(e.ChildText("span.yt-uix-button-content"), 10, 64)
+		cp.Page, _ = strconv.ParseInt(e.ChildText("button.yt-uix-button > span.yt-uix-button-content"), 10, 64)
 
 		result.Pagination = append(result.Pagination, cp)
 
