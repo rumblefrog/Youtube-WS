@@ -15,6 +15,19 @@ type Video struct {
 	Thumbnail   string `json:"thumbnail"`
 }
 
+type Pager struct {
+	Page int64 `json:"page"`
+
+	Meta *PagerMeta `json:"meta"`
+}
+
+type PagerMeta struct {
+	Query string `json:"query"`
+	SP    string `json:"sp"`
+}
+
 type Result struct {
-	Videos []*Video
+	Videos      []*Video `json:"videos"`
+	Pagination  []*Pager `json:"pagination"`
+	CurrentPage int64    `json:"currentpage"`
 }

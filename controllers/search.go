@@ -1,11 +1,13 @@
 package controllers
 
 import (
+	"strconv"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gocolly/colly"
 	"github.com/rumblefrog/Youtube-WS/models"
+	"github.com/rumblefrog/Youtube-WS/utils"
 )
 
 func Search(c *gin.Context) {
@@ -39,6 +41,27 @@ func Search(c *gin.Context) {
 		video.Description = e.ChildText("div.yt-lockup-description")
 
 		result.Videos = append(result.Videos, video)
+	})
+
+	searchCollector.OnHTML("div.search-pager", func(e *colly.HTMLElement) {
+		result.CurrentPage, _ = strconv.ParseInt(e.ChildText("button.yt-uix-button > span.yt-uix-button-content"), 10, 64)
+
+		cp := &models.Pager{}
+
+		cp.Meta = utils.ParsePager(e.ChildAttr("button.yt-uix-button", "data-redirect-url"), true)
+		// log.Println(e.ChildAttr("button.yt-uix-button", "data-redirect-url"))
+		cp.Page, _ = strconv.ParseInt(e.ChildText("span.yt-uix-button-content"), 10, 64)
+
+		result.Pagination = append(result.Pagination, cp)
+
+		e.ForEach("a.yt-uix-button", func(i int, el *colly.HTMLElement) {
+			pager := &models.Pager{}
+
+			pager.Meta = utils.ParsePager(el.Attr("href"), false)
+			pager.Page, _ = strconv.ParseInt(el.ChildText("span.yt-uix-button-content"), 10, 64)
+
+			result.Pagination = append(result.Pagination, pager)
+		})
 	})
 
 	searchCollector.OnScraped(func(r *colly.Response) {
