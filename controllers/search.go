@@ -12,7 +12,6 @@ func Search(c *gin.Context) {
 
 	if err = c.ShouldBindQuery(&q); err != nil {
 		c.String(500, "Query binding failed")
-
 		return
 	}
 

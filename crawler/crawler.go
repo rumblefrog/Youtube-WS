@@ -1,7 +1,6 @@
 package crawler
 
 import (
-	"log"
 	"net/url"
 	"strconv"
 	"strings"
@@ -57,7 +56,6 @@ func Crawl(q *models.Query, complete chan<- *models.Result) {
 
 	searchCollector.OnScraped(func(r *colly.Response) {
 		complete <- result
-		log.Println("Done")
 	})
 
 	yl, _ := url.Parse("https://www.youtube.com/results")

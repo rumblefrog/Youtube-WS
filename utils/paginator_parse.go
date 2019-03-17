@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"log"
 	"net/url"
 	"strings"
 
@@ -42,10 +41,6 @@ func ParsePager(s string, active bool) *models.PagerMeta {
 
 		meta.Query = v.Get("search_query")
 		meta.SP = v.Get("sp")
-
-		if meta.SP == "" || meta.Query == "" {
-			log.Println(s, v)
-		}
 	}
 
 	return meta
