@@ -1,9 +1,21 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
-  </div>
+	<div id="Home" class="columns">
+		<div class="column is-4 is-offset-4">
+			<b-field>
+				<b-input placeholder="Search Videos"
+					type="search"
+					expanded>
+				</b-input>
+				<p class="control">
+					<button class="button is-primary">
+						<font-awesome-icon icon="search" />
+					</button>
+				</p>
+			</b-field>
+		</div>
+	</div>
 </template>
+
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
