@@ -2,6 +2,8 @@ package main
 
 import (
 	"log"
+	"os"
+	"path/filepath"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/static"
@@ -15,7 +17,16 @@ func main() {
 	router := gin.Default()
 
 	router.Use(cors.Default())
-	router.Use(static.Serve("/", static.LocalFile("./dist", false)))
+
+	ex, err := os.Executable()
+
+	if err != nil {
+		panic(err)
+	}
+
+	exPath := filepath.Dir(ex)
+
+	router.Use(static.Serve("/", static.LocalFile(exPath+"/dist", false)))
 
 	api := router.Group("/api")
 	{
