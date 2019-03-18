@@ -5,6 +5,7 @@
 				<b-input placeholder="Search Videos"
 					type="search"
 					v-model="keyword"
+					@keyup.native.enter="search"
 					expanded>
 				</b-input>
 				<p class="control">
@@ -27,18 +28,19 @@ const namespace: string = 'search';
 
 @Component
 export default class Home extends Vue {
-	@Action('purgeVideos', { namespace }) purgeVideos: any;
-	@Action('searchVideos', { namespace }) searchVideos: Promise<any>;
+	@Action('purgeData', { namespace }) public purgeData: any;
+	@Action('searchVideos', { namespace }) public searchVideos: Promise<void>;
 
 	public keyword: string = "";
 
-	search() {
-		if (this.keyword == "") {
+	public search() {
+		if (this.keyword === "") {
 			return
 		}
 
-		this.purgeVideos();
+		this.purgeData();
 
+		// @ts-ignore
 		this.searchVideos(this.keyword);
 	}
 }

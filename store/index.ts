@@ -9,7 +9,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store<RootState>({
   state: {
-      verison: '0.0.1',
+      verison: '1.0.0',
   },
   modules: {
       search,

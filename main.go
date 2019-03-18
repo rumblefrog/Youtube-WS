@@ -1,6 +1,8 @@
 package main
 
 import (
+	"log"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
@@ -8,6 +10,8 @@ import (
 )
 
 func main() {
+	gin.SetMode(gin.ReleaseMode)
+
 	router := gin.Default()
 
 	router.Use(cors.Default())
@@ -19,6 +23,8 @@ func main() {
 		api.GET("/manifest", controllers.Manifest)
 		api.GET("/video", controllers.Video)
 	}
+
+	log.Println("Started YWS server")
 
 	router.Run(":8080")
 }

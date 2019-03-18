@@ -1,5 +1,5 @@
 <template>
-    <div class="box">
+    <div class="box" @click="pushVCode(vcode)">
         <article class="media">
             <figure class="media-left">
                 <p class="image">
@@ -23,6 +23,9 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { State, Action, Getter } from 'vuex-class';
+
+const namespace: string = 'search';
 
 @Component
 export default class Video extends Vue {
@@ -31,5 +34,17 @@ export default class Video extends Vue {
     @Prop() public author!: string;
     @Prop() public views!: string;
     @Prop() public timelapsed!: string;
+    @Prop() public vcode!: string;
+
+    @Action('setVCode', { namespace }) public setVCode: Promise<any>;
+
+    public pushVCode(vcode: string) {
+        if (vcode == "") {
+            return
+        }
+
+        // @ts-ignore
+        this.setVCode(vcode);
+    }
 }
 </script>

@@ -1,19 +1,19 @@
 import { ActionTree } from 'vuex';
 
-import { Toast } from 'buefy/dist/components/toast';
+const { Toast } = require('buefy/dist/components/toast');
 
 import axios from 'axios';
 
-import { SearchState, Video } from './types';
+import { SearchState, Video, Manifest } from './types';
 import { RootState } from '../types';
 
 import router from '@/router';
 
 
 export const actions: ActionTree<SearchState, RootState> = {
-    async searchVideos({ commit }, keyword: string): Promise<any> {
+    async searchVideos({ commit }, keyword: string): Promise<void> {
         try {
-            const res = await axios.get('http://localhost:8080/api/search?keyword=' + keyword);
+            const res = await axios.get('/api/search?keyword=' + keyword);
 
             const payload: Video[] = res && res.data && res.data.videos;
 
@@ -29,7 +29,26 @@ export const actions: ActionTree<SearchState, RootState> = {
             });
         }
     },
-    purgeVideos({ commit }): any {
-        commit('purgeVideos');
+    purgeData({ commit }): any {
+        commit('purgeData');
+    },
+    async setVCode({ commit }, vcode: string): Promise<void> {
+        commit('setVCode', vcode);
+
+        try {
+            const res = await axios.get('/api/manifest?vcode=' + vcode);
+
+            const payload: Manifest = res && res.data;
+
+            commit('setManifest', payload);
+        } catch {
+            Toast.open({
+                message: 'Failed to fetch video manifest',
+                type: 'is-danger',
+                position: 'is-bottom',
+            });
+        }
+
+        router.push('/selection');
     },
 };

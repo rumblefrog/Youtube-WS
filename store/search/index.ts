@@ -6,6 +6,8 @@ import { RootState } from '../types';
 
 export const state: SearchState = {
     videos: [],
+    currentVCode: "",
+    currentManifest: undefined,
 };
 
 const namespaced: boolean = true;

@@ -7,7 +7,8 @@
                 :title="v.title"
                 :author="v.creator"
                 :views="v.views"
-                :timelapsed="v.timelapsed">
+                :timelapsed="v.timelapsed"
+                :vcode="v.vcode">
             </Video>
         </div>
     </div>
@@ -15,11 +16,11 @@
 
 <script lang="ts">
 import { Component, Prop, Vue} from 'vue-property-decorator';
-import { State, Action, Getter } from 'vuex-class';
+import { State } from 'vuex-class';
 import { SearchState } from '../store/search/types';
 import Video from '../components/Video.vue';
 
-// const namespace: string = 'search';
+const namespace: string = 'search';
 
 @Component({
     components: {
@@ -27,7 +28,6 @@ import Video from '../components/Video.vue';
     },
 })
 export default class Videos extends Vue {
-    @State('search') search: SearchState;
-    
+    @State('search') public search: SearchState;
 }
 </script>
