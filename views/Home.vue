@@ -4,10 +4,12 @@
 			<b-field>
 				<b-input placeholder="Search Videos"
 					type="search"
+					v-model="keyword"
 					expanded>
 				</b-input>
 				<p class="control">
-					<button class="button is-primary">
+					<button class="button is-primary"
+						@click="search">
 						<font-awesome-icon icon="search" />
 					</button>
 				</p>
@@ -18,13 +20,26 @@
 
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import { State, Action, Getter } from 'vuex-class';
 
-@Component({
-  components: {
-    HelloWorld,
-  },
-})
-export default class Home extends Vue {}
+const namespace: string = 'search';
+
+@Component
+export default class Home extends Vue {
+	@Action('purgeVideos', { namespace }) purgeVideos: any;
+	@Action('searchVideos', { namespace }) searchVideos: Promise<any>;
+
+	public keyword: string = "";
+
+	search() {
+		if (this.keyword == "") {
+			return
+		}
+
+		this.purgeVideos();
+
+		this.searchVideos(this.keyword);
+	}
+}
 </script>
