@@ -14,6 +14,8 @@ func main() {
 	api := router.Group("/api")
 	{
 		api.GET("/search", controllers.Search)
+		api.GET("/manifest", controllers.Manifest)
+		api.GET("/video", controllers.Video)
 	}
 
 	router.Run(":8080")
