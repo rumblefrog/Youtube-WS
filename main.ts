@@ -1,5 +1,4 @@
 import Vue from 'vue'
-// import Buefy from 'buefy';
 
 const { Input } = require('buefy/dist/components/input');
 const { Field } = require('buefy/dist/components/field');
@@ -19,10 +18,6 @@ Vue.component('b-field', Field);
 Vue.component('b-input', Input)
 
 Vue.config.productionTip = false
-
-// Vue.use(Buefy, {
-//     defaultIconPack: 'fas',
-// });
 
 new Vue({
   router,
