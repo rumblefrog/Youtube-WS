@@ -56,8 +56,18 @@ $link: $white;
 $family-sans-serif: "Montserrat", sans-serif;
 $family-primary: $family-sans-serif;
 
-@import "~bulma";
-@import "~buefy/src/scss/buefy";
+@import "~bulma/sass/base/_all";
+@import "~bulma/sass/layout/hero";
+@import "~bulma/sass/layout/section";
+@import "~bulma/sass/grid/columns";
+@import "~bulma/sass/components/media";
+@import "~bulma/sass/components/navbar";
+@import "~bulma/sass/elements/button";
+@import "~bulma/sass/elements/box";
+@import "~bulma/sass/elements/container";
+@import "~bulma/sass/elements/image";
+@import "~bulma/sass/elements/form";
+@import "~buefy/src/scss/components/_form";
 @import "./style/fonts";
 </style>
 
