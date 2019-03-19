@@ -13,7 +13,6 @@ module.exports = {
             }
         }
     },
-    integrity: true,
     publicPath: undefined,
     outputDir: undefined,
     assetsDir: undefined,
